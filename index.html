@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#09080e" />
+    <title>Diya — A little light</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="particles" aria-hidden="true"></div>
+    <canvas class="cinematic-canvas" id="cinematic-canvas" aria-hidden="true"></canvas>
+    <div class="sky-lanterns" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="golden-rays" aria-hidden="true"></div>
+    <div class="welcome-screen" id="welcome-screen" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <div class="welcome-lamp" aria-hidden="true"><span class="flame"></span><span class="diya-bowl"></span></div>
+      <div class="welcome-copy">
+        <p>Some lights make a night beautiful...</p>
+        <p>But some lights make life beautiful.</p>
+        <p>Tonight, this little celebration is for someone special.</p>
+        <button class="button button-primary" id="start-button" type="button">Start Celebration <span>✦</span></button>
+        <small>Turn your sound on for the full experience</small>
+      </div>
+    </div>
+    <header class="topbar">
+      <a class="brand" href="#welcome"><span class="brand-mark">✦</span> DIYA</a>
+      <nav aria-label="Primary navigation">
+        <a href="#diya">Diya</a>
+        <a href="#celebration">Celebration</a>
+        <a href="#memories">Memories</a>
+        <a href="#message">Secret Message</a>
+      </nav>
+      <div class="top-actions">
+        <button class="replay-button" id="replay-button" type="button">↻ <span>Replay</span></button>
+        <button class="audio-pill" id="audio-open" type="button" aria-label="Open audio controls"><span>◉</span> Sound</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero scene" id="welcome">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">A magical festival of light</p>
+          <h1>Some lights make a night beautiful.<br /><em>Some lights make life beautiful.</em></h1>
+          <p class="hero-subtitle">Tonight, this little celebration is for someone special.</p>
+          <button class="button button-primary" id="diya-button" type="button">Touch the Diya to spread the light <span>✦</span></button>
+          <p class="hint">Tap the diya to spread the light</p>
+        </div>
+        <div class="hero-diya-wrap">
+          <div class="halo halo-large"></div>
+          <div class="halo halo-small"></div>
+          <button class="main-diya" id="main-diya" type="button" aria-label="Light the central diya">
+            <span class="flame"><i></i></span>
+            <span class="wick"></span>
+            <span class="diya-bowl"><b></b></span>
+            <span class="diya-shadow"></span>
+          </button>
+        </div>
+        <div class="scroll-cue">Scroll to wander <span>↓</span></div>
+      </section>
+
+      <section class="section diya-section" id="diya">
+        <div class="section-heading reveal">
+          <p class="eyebrow">The heart of the night</p>
+          <h2>Every festival has its lights,<br /><em>this celebration has its Diya.</em></h2>
+          <p>One warm glow, a thousand little memories. Stay awhile and let the light find you.</p>
+        </div>
+        <div class="orbit-scene reveal">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="orbit-diya d1"><span class="mini-flame"></span><span class="mini-bowl"></span></div>
+          <div class="orbit-diya d2"><span class="mini-flame"></span><span class="mini-bowl"></span></div>
+          <div class="orbit-diya d3"><span class="mini-flame"></span><span class="mini-bowl"></span></div>
+          <div class="center-glow"></div>
+          <div class="small-diya"><span class="flame"></span><span class="diya-bowl"></span></div>
+        </div>
+      </section>
+
+      <section class="section celebration" id="celebration">
+        <div class="fireworks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="celebration-copy reveal">
+          <p class="eyebrow">A sky full of wishes</p>
+          <h2>Shubh<br /><em>Deepavali.</em></h2>
+          <p>A night of a thousand little flames — each one a wish for joy, warmth and light in every corner of your life.</p>
+          <button class="button button-ghost" id="fireworks-button" type="button">Light up the sky <span>↗</span></button>
+        </div>
+        <div class="rangoli reveal" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span><b>ॐ</b></div>
+      </section>
+
+      <section class="section memories" id="memories">
+        <div class="section-heading reveal">
+          <p class="eyebrow">The moments we keep</p>
+          <h2>Memories, <em>in a golden light.</em></h2>
+          <p>Little moments that keep glowing, long after the night is over.</p>
+        </div>
+        <div class="gallery" id="gallery"></div>
+      </section>
+
+      <section class="section letter-section" id="message">
+        <div class="letter reveal">
+          <p class="eyebrow">A little something, just for you</p>
+          <div class="envelope" id="envelope"><span>✦</span></div>
+          <h2 id="letter-title">Open your surprise <em>♡</em></h2>
+          <button class="button button-ghost" id="letter-button" type="button">Open Your Surprise <span>♥</span></button>
+          <div class="letter-copy" id="letter-copy">
+            <p>Dear Diya,</p>
+            <p>Some people bring happiness without even trying. Some smiles make an ordinary day special.</p>
+            <p>May your life always be filled with beautiful memories and countless reasons to smile.</p>
+            <p>Keep shining, Diya! <span class="gold">♥</span></p>
+            <p>With lots of warm wishes.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>Made with light</span><span>DIYA · 2026</span><button id="top-button" type="button">Back to top ↑</button></footer>
+
+    <aside class="audio-panel" id="audio-panel" aria-label="Audio controls" aria-hidden="true">
+      <div class="panel-top"><span class="eyebrow">Sound & atmosphere</span><button id="audio-close" type="button" aria-label="Close audio controls">×</button></div>
+      <p class="panel-title">Set the mood.</p>
+      <label class="toggle-row"><span><strong>Background music</strong><small>Soft ambient glow</small></span><input id="music-toggle" type="checkbox" checked /><i></i></label>
+      <label class="toggle-row"><span><strong>Sound effects</strong><small>Moments of magic</small></span><input id="effects-toggle" type="checkbox" checked /><i></i></label>
+      <label class="volume-row"><span>Volume</span><input id="volume" type="range" min="0" max="1" value=".45" step=".01" /></label>
+      <p class="audio-note">Audio begins after you light the night.</p>
+    </aside>
+    <div class="light-wash" aria-hidden="true"></div>
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close gallery">×</button>
+      <button class="lightbox-arrow prev" id="prev-photo" type="button" aria-label="Previous photo">←</button>
+      <figure><img id="lightbox-image" alt="" /><figcaption id="lightbox-caption"></figcaption></figure>
+      <button class="lightbox-arrow next" id="next-photo" type="button" aria-label="Next photo">→</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
