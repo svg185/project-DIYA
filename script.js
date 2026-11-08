@@ -34,7 +34,7 @@ const photos = [
    STATE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 let currentChapter = 0;      // 0 = welcome screen
-const TOTAL_CHAPTERS = 11;
+const TOTAL_CHAPTERS = 10;
 let storyStarted = false;
 let petalInterval = null;
 let responseChosen = false;
@@ -464,90 +464,6 @@ function spawnProposalPetals() {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RESPONSE BUTTONS (Chapter 11)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function handleResponse(type) {
-  if (responseChosen) return;
-  responseChosen = true;
-
-  const options = document.getElementById('response-options');
-  options.style.transition = 'opacity .4s';
-  options.style.opacity = '0';
-  setTimeout(() => { options.style.display = 'none'; }, 400);
-
-  const msgId = { yes: 'resp-msg-yes', time: 'resp-msg-time', friends: 'resp-msg-friends' }[type];
-  const msg = document.getElementById(msgId);
-  if (msg) msg.classList.add('shown');
-  sendAnswerByEmail(type);
-
-  // Particle effect per response
-  if (type === 'yes') {
-    audio.bloom();
-    for (let i = 0; i < 60; i++) {
-      setTimeout(() => {
-        spawnParticle(
-          Math.random() * window.innerWidth,
-          Math.random() * window.innerHeight,
-          'bloom'
-        );
-      }, i * 60);
-    }
-
-    async function sendAnswerByEmail(type) {
-      const status = document.getElementById('answer-status');
-      const labels = {
-        yes: 'YES — Let’s start something beautiful',
-        time: 'I need some time',
-        friends: 'Let’s stay friends',
-      };
-      const answer = labels[type];
-      if (!status || !answer) return;
-      status.classList.remove('error');
-      status.textContent = 'Sending your answer...';
-
-      try {
-        const response = await fetch('https://formsubmit.co/ajax/kumarkartik2146@gmail.com', {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            _subject: `Kartik × Diya — ${answer}`,
-            _template: 'table',
-            _captcha: 'false',
-            answer,
-            submitted_at: new Date().toLocaleString(),
-          }),
-        });
-        if (!response.ok) throw new Error(`Email service returned ${response.status}`);
-        status.textContent = 'Your answer has been sent privately. ❤️';
-      } catch (error) {
-        status.classList.add('error');
-        status.textContent = 'Email could not be sent right now. Please try again.';
-        console.error('Unable to send answer email.', error);
-      }
-    }
-    startPetals(300);
-  } else if (type === 'time') {
-    audio.chime();
-    for (let i = 0; i < 20; i++) {
-      setTimeout(() => {
-        spawnParticle(
-          Math.random() * window.innerWidth,
-          Math.random() * window.innerHeight,
-          'heart'
-        );
-      }, i * 150);
-    }
-  } else {
-    audio.tone(392, 1.5, 'sine');
-    stopPetals();
-  }
-}
-
-document.getElementById('resp-yes')    .addEventListener('click', () => handleResponse('yes'));
-document.getElementById('resp-time')   .addEventListener('click', () => handleResponse('time'));
-document.getElementById('resp-friends').addEventListener('click', () => handleResponse('friends'));
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    ENVELOPE OPEN (Chapter 1)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function openEnvelope() {
@@ -662,20 +578,9 @@ document.getElementById('brand-home')  .addEventListener('click', (e) => {
    RESTART
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function restartStory() {
-  responseChosen = false;
   proposalTimers.forEach(clearTimeout);
   proposalTimers = [];
   stopPetals();
-
-  // Reset response UI
-  document.getElementById('response-options').style.display = '';
-  document.getElementById('response-options').style.opacity = '1';
-  const answerStatus = document.getElementById('answer-status');
-  answerStatus.textContent = '';
-  answerStatus.classList.remove('error');
-  ['resp-msg-yes', 'resp-msg-time', 'resp-msg-friends'].forEach(id => {
-    document.getElementById(id).classList.remove('shown');
-  });
 
   // Reset transform overlay
   const tl = document.getElementById('transform-light');
@@ -705,10 +610,8 @@ function restartStory() {
 }
 
 document.getElementById('restart-button')   .addEventListener('click', restartStory);
-document.getElementById('restart-story-btn').addEventListener('click', restartStory);
-document.getElementById('read-heart-btn').addEventListener('click', () => {
-  audio.sparkle();
-  goToChapter(11);
+document.getElementById('memories-after-proposal').addEventListener('click', () => {
+  document.getElementById('memories-btn').click();
 });
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
