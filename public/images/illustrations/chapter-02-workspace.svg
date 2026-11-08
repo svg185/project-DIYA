@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+<defs><linearGradient id="room" y2="1"><stop stop-color="#f8c99a"/><stop offset=".55" stop-color="#d78da2"/><stop offset="1" stop-color="#654b78"/></linearGradient><linearGradient id="desk"><stop stop-color="#8f5b4c"/><stop offset="1" stop-color="#3e2940"/></linearGradient></defs>
+<rect width="960" height="540" fill="url(#room)"/><rect x="70" y="58" width="360" height="245" rx="14" fill="#9ad0dd" stroke="#fbe5c2" stroke-width="12"/><path d="M80 270c90-90 180-45 350-150v170H80Z" fill="#f7ad76" opacity=".8"/><circle cx="345" cy="105" r="32" fill="#ffe2a1"/>
+<rect y="375" width="960" height="165" fill="url(#desk)"/><rect x="480" y="205" width="300" height="165" rx="12" fill="#29233d" stroke="#f1b6bb" stroke-width="5"/><rect x="510" y="230" width="240" height="110" fill="#343a65"/><g stroke="#c9b8ee" stroke-width="5" opacity=".75"><path d="M530 255h130M530 275h180M530 295h110"/></g>
+<g fill="#f5d28b"><rect x="170" y="330" width="42" height="70" rx="5"/><rect x="220" y="310" width="42" height="90" rx="5"/><rect x="270" y="342" width="42" height="58" rx="5"/></g><path d="M825 160v220M790 160h70l18 35h-106Z" fill="#f6d69d" opacity=".8"/>
+</svg>

@@ -3,135 +3,556 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#09080e" />
-    <title>Diya — A little light</title>
+    <meta name="theme-color" content="#0B0714" />
+    <title>A Little World ❤️</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
+    <!-- Ambient Layer -->
     <div class="grain" aria-hidden="true"></div>
-    <div class="particles" aria-hidden="true"></div>
+    <div class="stars-bg" aria-hidden="true"></div>
     <canvas class="cinematic-canvas" id="cinematic-canvas" aria-hidden="true"></canvas>
-    <div class="sky-lanterns" aria-hidden="true"><i></i><i></i><i></i></div>
-    <div class="golden-rays" aria-hidden="true"></div>
+    <div class="petal-layer" id="petal-layer" aria-hidden="true"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen" aria-live="polite">
+      <div class="loading-heart">
+        <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path class="heart-path" d="M50 85 C50 85 5 55 5 28 C5 14 16 5 28 5 C38 5 46 11 50 18 C54 11 62 5 72 5 C84 5 95 14 95 28 C95 55 50 85 50 85Z"/>
+        </svg>
+      </div>
+      <p class="loading-text">Preparing something special...</p>
+    </div>
+
+    <!-- Welcome / Invitation Screen -->
     <div class="welcome-screen" id="welcome-screen" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
-      <div class="welcome-lamp" aria-hidden="true"><span class="flame"></span><span class="diya-bowl"></span></div>
+      <div class="welcome-stars" aria-hidden="true"></div>
+      <div class="welcome-hearts" id="welcome-hearts" aria-hidden="true"></div>
+      <div class="welcome-envelope" aria-hidden="true">
+        <div class="env-body">
+          <div class="env-flap"></div>
+          <div class="env-seal">
+            <svg viewBox="0 0 60 54" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 50 C30 50 2 32 2 16 C2 7 9 2 17 2 C23 2 28 6 30 11 C32 6 37 2 43 2 C51 2 58 7 58 16 C58 32 30 50 30 50Z" fill="#F3A5C5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
       <div class="welcome-copy">
-        <p>Some lights make a night beautiful...</p>
-        <p>But some lights make life beautiful.</p>
-        <p>Tonight, this little celebration is for someone special.</p>
-        <button class="button button-primary" id="start-button" type="button">Start Celebration <span>✦</span></button>
-        <small>Turn your sound on for the full experience</small>
+        <p class="welcome-eyebrow">A quiet little secret...</p>
+        <h1 id="welcome-title" class="welcome-title welcome-message" data-message="Some feelings are difficult to express...">Some feelings are difficult to express...</h1>
+        <p class="welcome-tagline welcome-second-message" id="welcome-second-message">Some stories are worth telling...</p>
+        <button class="btn btn-primary welcome-cta" id="start-button" type="button" disabled>
+          Open My Little World <span>✨</span>
+        </button>
+        <small>Take a breath. There is something beautiful here.</small>
       </div>
     </div>
-    <header class="topbar">
-      <a class="brand" href="#welcome"><span class="brand-mark">✦</span> DIYA</a>
-      <nav aria-label="Primary navigation">
-        <a href="#diya">Diya</a>
-        <a href="#celebration">Celebration</a>
-        <a href="#memories">Memories</a>
-        <a href="#message">Secret Message</a>
+
+    <!-- Top Navigation -->
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#" id="brand-home">
+        <span class="brand-heart">❤</span> My Little World
+      </a>
+      <nav class="chapter-nav" aria-label="Chapter navigation" id="chapter-nav">
+        <div class="chapter-dots" id="chapter-dots">
+          <!-- dots injected by JS -->
+        </div>
       </nav>
       <div class="top-actions">
-        <button class="replay-button" id="replay-button" type="button">↻ <span>Replay</span></button>
-        <button class="audio-pill" id="audio-open" type="button" aria-label="Open audio controls"><span>◉</span> Sound</button>
+        <button class="restart-button" id="restart-button" type="button" title="Restart story">↺ <span>Restart</span></button>
+        <button class="audio-pill" id="audio-open" type="button" aria-label="Open audio controls">
+          <span class="audio-icon">♪</span> Sound
+        </button>
       </div>
     </header>
 
-    <main>
-      <section class="hero scene" id="welcome">
-        <div class="hero-copy reveal">
-          <p class="eyebrow">A magical festival of light</p>
-          <h1>Some lights make a night beautiful.<br /><em>Some lights make life beautiful.</em></h1>
-          <p class="hero-subtitle">Tonight, this little celebration is for someone special.</p>
-          <button class="button button-primary" id="diya-button" type="button">Touch the Diya to spread the light <span>✦</span></button>
-          <p class="hint">Tap the diya to spread the light</p>
-        </div>
-        <div class="hero-diya-wrap">
-          <div class="halo halo-large"></div>
-          <div class="halo halo-small"></div>
-          <button class="main-diya" id="main-diya" type="button" aria-label="Light the central diya">
-            <span class="flame"><i></i></span>
-            <span class="wick"></span>
-            <span class="diya-bowl"><b></b></span>
-            <span class="diya-shadow"></span>
+    <!-- Chapter Progress Bar -->
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━ MAIN STORY ━━━━━━━━━━━━ -->
+    <main id="story">
+
+      <!-- CHAPTER 1 — THE SECRET INVITATION -->
+      <section class="chapter scene-galaxy storybook-chapter" id="ch1" data-chapter="1">
+        <div class="galaxy-bg" aria-hidden="true"></div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter I</p>
+          <h2 class="chapter-title">The Secret Invitation</h2>
+          <div class="ch1-visual" aria-hidden="true">
+            <div class="big-envelope" id="big-envelope">
+              <div class="env-body-big">
+                <div class="env-flap-big" id="env-flap-big"></div>
+                <div class="env-seal-big" id="env-seal-big">
+                  <svg viewBox="0 0 60 54" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30 50 C30 50 2 32 2 16 C2 7 9 2 17 2 C23 2 28 6 30 11 C32 6 37 2 43 2 C51 2 58 7 58 16 C58 32 30 50 30 50Z" fill="#F3A5C5" opacity="0.9"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="heart-particles" id="heart-particles" aria-hidden="true"></div>
+            </div>
+          </div>
+          <p class="chapter-quote">"A little story, written from the heart..."</p>
+          <button class="btn btn-romantic" id="open-envelope-btn" type="button">
+            Open Something Special 💌
           </button>
         </div>
-        <div class="scroll-cue">Scroll to wander <span>↓</span></div>
-      </section>
-
-      <section class="section diya-section" id="diya">
-        <div class="section-heading reveal">
-          <p class="eyebrow">The heart of the night</p>
-          <h2>Every festival has its lights,<br /><em>this celebration has its Diya.</em></h2>
-          <p>One warm glow, a thousand little memories. Stay awhile and let the light find you.</p>
-        </div>
-        <div class="orbit-scene reveal">
-          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-          <div class="orbit-diya d1"><span class="mini-flame"></span><span class="mini-bowl"></span></div>
-          <div class="orbit-diya d2"><span class="mini-flame"></span><span class="mini-bowl"></span></div>
-          <div class="orbit-diya d3"><span class="mini-flame"></span><span class="mini-bowl"></span></div>
-          <div class="center-glow"></div>
-          <div class="small-diya"><span class="flame"></span><span class="diya-bowl"></span></div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-01-envelope">
+          <img src="public/images/illustrations/chapter-01-envelope.svg" alt="A glowing sealed envelope floating among stars in a dreamy purple galaxy" loading="eager" width="960" height="540">
+          <figcaption>Every beautiful story begins with a little mystery.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn next-btn" data-next="2" type="button">Continue ↓</button>
         </div>
       </section>
 
-      <section class="section celebration" id="celebration">
-        <div class="fireworks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="celebration-copy reveal">
-          <p class="eyebrow">A sky full of wishes</p>
-          <h2>Shubh<br /><em>Deepavali.</em></h2>
-          <p>A night of a thousand little flames — each one a wish for joy, warmth and light in every corner of your life.</p>
-          <button class="button button-ghost" id="fireworks-button" type="button">Light up the sky <span>↗</span></button>
-        </div>
-        <div class="rangoli reveal" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span><b>ॐ</b></div>
-      </section>
-
-      <section class="section memories" id="memories">
-        <div class="section-heading reveal">
-          <p class="eyebrow">The moments we keep</p>
-          <h2>Memories, <em>in a golden light.</em></h2>
-          <p>Little moments that keep glowing, long after the night is over.</p>
-        </div>
-        <div class="gallery" id="gallery"></div>
-      </section>
-
-      <section class="section letter-section" id="message">
-        <div class="letter reveal">
-          <p class="eyebrow">A little something, just for you</p>
-          <div class="envelope" id="envelope"><span>✦</span></div>
-          <h2 id="letter-title">Open your surprise <em>♡</em></h2>
-          <button class="button button-ghost" id="letter-button" type="button">Open Your Surprise <span>♥</span></button>
-          <div class="letter-copy" id="letter-copy">
-            <p>Dear Diya,</p>
-            <p>Some people bring happiness without even trying. Some smiles make an ordinary day special.</p>
-            <p>May your life always be filled with beautiful memories and countless reasons to smile.</p>
-            <p>Keep shining, Diya! <span class="gold">♥</span></p>
-            <p>With lots of warm wishes.</p>
+      <!-- CHAPTER 2 — THE PERSON BEHIND THE FEELINGS -->
+      <section class="chapter scene-workspace storybook-chapter" id="ch2" data-chapter="2">
+        <div class="workspace-bg" aria-hidden="true">
+          <div class="ws-window">
+            <div class="ws-sunset"></div>
+            <div class="ws-rain" aria-hidden="true"></div>
+          </div>
+          <div class="ws-desk">
+            <div class="ws-laptop">
+              <div class="ws-screen">
+                <div class="code-line"></div><div class="code-line short"></div>
+                <div class="code-line medium"></div><div class="code-line"></div>
+                <div class="code-line short"></div><div class="code-line medium"></div>
+                <div class="cursor-blink" aria-hidden="true"></div>
+              </div>
+            </div>
+            <div class="ws-books" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="ws-lamp" aria-hidden="true"></div>
           </div>
         </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter II</p>
+          <h2 class="chapter-title">Meet the One Behind the Feelings</h2>
+          <div class="story-card glassmorphism">
+            <p>Hey you!</p>
+            <p>Before I tell you what's in my heart, I want you to know a little about the person behind these feelings.</p>
+            <p>I'm someone from Uttar Pradesh, learning how to turn dreams into something real.</p>
+            <p>I love technology, coding, exploring new ideas and learning something new every day.</p>
+            <p>I'm sometimes funny, sometimes caring — and honestly, a <em>professional overthinker!</em></p>
+            <p>I have big dreams and I'm working hard to achieve them.</p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-02-workspace">
+          <img src="public/images/illustrations/chapter-02-workspace.svg" alt="A fictional young student working at a warm wooden desk beside a sunset window" loading="lazy" width="960" height="540">
+          <figcaption>A quiet room, a thousand dreams, and a little golden light.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="1" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="3" type="button">Continue →</button>
+        </div>
       </section>
+
+      <!-- CHAPTER 3 — THE UNEXPECTED STORM -->
+      <section class="chapter scene-storm storybook-chapter" id="ch3" data-chapter="3">
+        <div class="storm-bg" aria-hidden="true">
+          <div class="storm-rain"></div>
+          <div class="storm-buildings">
+            <div class="building b1"></div>
+            <div class="building b2"></div>
+            <div class="building b3"></div>
+            <div class="building b4"></div>
+          </div>
+          <div class="storm-overlay"></div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter III</p>
+          <h2 class="chapter-title">The Unexpected Storm</h2>
+          <div class="story-card glassmorphism">
+            <p>My family once had a property dealing business.</p>
+            <p>My father and one of his friends used to run that business together.</p>
+            <p>Unfortunately, trust was broken. The business fell apart, and my family was left with difficult responsibilities we never expected to carry.</p>
+            <p>Life changed completely.</p>
+            <p>We had to <strong>rebuild</strong>, take responsibility, and face challenges we never imagined.</p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-03-storm">
+          <img src="public/images/illustrations/chapter-03-storm.svg" alt="An empty property office with papers on a desk during a blue-grey rainy evening" loading="lazy" width="960" height="540">
+          <figcaption>Some storms arrive quietly, and ask us to begin again.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="2" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="4" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 4 — THE FIGHTER -->
+      <section class="chapter scene-fighter storybook-chapter" id="ch4" data-chapter="4">
+        <div class="fighter-bg" aria-hidden="true">
+          <div class="montage-grid">
+            <div class="montage-item m1"><span>💻</span><small>Freelancing</small></div>
+            <div class="montage-item m2"><span>🏠</span><small>Property Dealing</small></div>
+            <div class="montage-item m3"><span>📱</span><small>Online Work</small></div>
+            <div class="montage-item m4"><span>📚</span><small>Learning</small></div>
+            <div class="montage-item m5"><span>🌙</span><small>Late Nights</small></div>
+            <div class="montage-item m6"><span>🎯</span><small>Planning</small></div>
+          </div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter IV</p>
+          <h2 class="chapter-title">The Fighter</h2>
+          <div class="story-card glassmorphism">
+            <p>I decided that I couldn't just give up.</p>
+            <p>I started working in <strong>freelancing</strong>, property dealing and offline affiliate work.</p>
+            <p>My days became busy and my nights became longer.</p>
+            <p>I wanted to support my family, fulfil my responsibilities and build a better future.</p>
+            <p><em>I haven't given up on my dreams.</em></p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-04-fighter">
+          <img src="public/images/illustrations/chapter-04-fighter.svg" alt="A determined fictional young man working late at a laptop under warm golden light" loading="lazy" width="960" height="540">
+          <figcaption>Even the longest nights can hold a spark of hope.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="3" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="5" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 5 — THE LIFE I FORGOT -->
+      <section class="chapter scene-midnight storybook-chapter" id="ch5" data-chapter="5">
+        <div class="midnight-bg" aria-hidden="true">
+          <div class="midnight-window">
+            <div class="midnight-moon"></div>
+            <div class="midnight-stars" aria-hidden="true"></div>
+            <div class="midnight-rain"></div>
+          </div>
+          <div class="silhouette" aria-hidden="true"></div>
+          <div class="sunrise-overlay" id="sunrise-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter V</p>
+          <h2 class="chapter-title">The Life I Forgot</h2>
+          <div class="story-card glassmorphism">
+            <p>Somewhere along the way, I became so busy working that I almost forgot what it felt like to simply <em>enjoy life</em>.</p>
+            <p>Every day had another target. Every night had another plan.</p>
+            <p>I was learning how to build a future, but I had stopped enjoying the present.</p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-05-midnight">
+          <img src="public/images/illustrations/chapter-05-midnight.svg" alt="A lonely figure beside a laptop in a moonlit room with soft blue city lights" loading="lazy" width="960" height="540">
+          <figcaption>Somewhere between the hours, the heart remembers how to feel.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="4" type="button">← Back</button>
+          <button class="nav-btn next-btn sunrise-trigger" data-next="6" type="button" id="sunrise-btn">Then something changed ☀️</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 6 — THEN CAME DIYA -->
+      <section class="chapter scene-garden storybook-chapter" id="ch6" data-chapter="6">
+        <div class="garden-bg" aria-hidden="true">
+          <div class="garden-sky"></div>
+          <div class="garden-sunlight" aria-hidden="true"></div>
+          <div class="garden-flowers" aria-hidden="true">
+            <div class="flower f1"><div class="petals"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+            <div class="flower f2"><div class="petals"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+            <div class="flower f3"><div class="petals"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+            <div class="flower f4"><div class="petals"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+            <div class="flower f5"><div class="petals"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+          </div>
+          <div class="butterflies" aria-hidden="true">
+            <div class="butterfly bt1"></div>
+            <div class="butterfly bt2"></div>
+            <div class="butterfly bt3"></div>
+          </div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter VI</p>
+          <h2 class="chapter-title diya-reveal" id="diya-name-reveal">Then Came <em>Someone Special</em></h2>
+          <div class="story-card glassmorphism">
+            <p>And then, I noticed someone special.</p>
+            <p>I don't know how to explain it perfectly, but there was something about you that caught my attention from the very beginning.</p>
+            <p>Your <strong>innocence</strong>. Your <strong>simplicity</strong>. Your <strong>beautiful smile</strong>. And the way you talk.</p>
+            <p>There was something so genuine about you that my heart noticed it before I could even understand it.</p>
+            <p><em>You were simply being yourself. And perhaps that's what made you so special.</em></p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-06-garden">
+          <img src="public/images/illustrations/chapter-06-garden.svg" alt="A pastel rose garden with butterflies, cherry blossoms, and warm sunlight" loading="lazy" width="960" height="540">
+          <figcaption>Then the world began to bloom in unexpected colors.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="5" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="7" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 7 — THE LITTLE HINTS -->
+      <section class="chapter scene-chat storybook-chapter" id="ch7" data-chapter="7">
+        <div class="chat-bg" aria-hidden="true">
+          <div class="chat-bubbles" id="chat-bubbles">
+            <div class="bubble b-sent reveal-bubble">I had been thinking...</div>
+            <div class="bubble b-sent reveal-bubble" style="--bd:0.4s">Maybe I should say something 💭</div>
+            <div class="bubble b-sent reveal-bubble" style="--bd:0.8s">Or maybe hint a little... 😅</div>
+            <div class="typing-indicator reveal-bubble" style="--bd:1.2s" aria-label="Typing">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter VII</p>
+          <h2 class="chapter-title">The Little Hints</h2>
+          <div class="story-card glassmorphism">
+            <p>I wanted to talk to you.</p>
+            <p>But I didn't always know how to start a conversation.</p>
+            <p>Sometimes I made little excuses just to talk to you. Sometimes I tried giving hints.</p>
+            <p>But you were so innocent and straightforward that I don't think you noticed most of them!</p>
+            <p><em>And honestly, that made me smile.</em> 😊</p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-07-hints">
+          <img src="public/images/illustrations/chapter-07-hints.svg" alt="A smartphone glowing beside pink flowers on a wooden desk at sunset" loading="lazy" width="960" height="540">
+          <figcaption>Sometimes a little hint is simply a heart learning to speak.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="6" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="8" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 8 — WHAT YOU CHANGED -->
+      <section class="chapter scene-transform storybook-chapter" id="ch8" data-chapter="8">
+        <div class="transform-bg" aria-hidden="true">
+          <div class="transform-dark"></div>
+          <div class="transform-light" id="transform-light"></div>
+          <div class="transform-flowers" aria-hidden="true"></div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter VIII</p>
+          <h2 class="chapter-title">What You Changed</h2>
+          <div class="story-card glassmorphism">
+            <p>I want you to understand something.</p>
+            <p>You didn't give me my dreams. You didn't become responsible for my struggles.</p>
+            <p>But after meeting you, I started realizing that there's <em>more to life</em> than just working every single day.</p>
+            <p>A conversation. A smile. A message.</p>
+            <p><strong>You reminded me that life has beautiful little moments beyond responsibilities.</strong></p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-08-new-beginning">
+          <img src="public/images/illustrations/chapter-08-new-beginning.svg" alt="A dark room opening into a magical flower garden filled with golden light" loading="lazy" width="960" height="540">
+          <figcaption>One small connection can open a whole new window of light.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="7" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="9" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 9 — NO MORE HINTS -->
+      <section class="chapter scene-confession storybook-chapter" id="ch9" data-chapter="9">
+        <div class="confession-bg" aria-hidden="true">
+          <div class="glass-heart-container">
+            <div class="glass-heart" id="glass-heart">
+              <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" class="heart-svg">
+                <defs>
+                  <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#F3A5C5;stop-opacity:0.9"/>
+                    <stop offset="100%" style="stop-color:#B9A3E8;stop-opacity:0.7"/>
+                  </linearGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <path d="M100 170 C100 170 10 110 10 55 C10 25 30 8 55 8 C72 8 87 18 100 36 C113 18 128 8 145 8 C170 8 190 25 190 55 C190 110 100 170 100 170Z"
+                  fill="url(#heartGrad)" filter="url(#glow)" opacity="0.85"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter IX</p>
+          <h2 class="chapter-title">No More Hints</h2>
+          <div class="story-card glassmorphism">
+            <p>I had actually planned to tell you everything on your birthday.</p>
+            <p>But honestly...</p>
+            <p><em>I don't think I can wait that long anymore.</em></p>
+            <p>No more hints. No more excuses.</p>
+          </div>
+          <div class="confession-reveal" id="confession-reveal">
+            <p class="confession-text">There is something I have been trying to say...</p>
+            <p class="confession-main">I LIKE YOU. <span class="heart-emoji">❤️</span></p>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-09-confession">
+          <img src="public/images/illustrations/chapter-09-confession.svg" alt="A glowing pink heart surrounded by rose petals and golden stars" loading="lazy" width="960" height="540">
+          <figcaption>Some feelings are too bright to stay hidden.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="8" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="10" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 10 — A BEAUTIFUL STORY -->
+      <section class="chapter scene-garden scene-proposal storybook-chapter" id="ch10" data-chapter="10">
+        <div class="proposal-bg" aria-hidden="true">
+          <div class="proposal-sky"></div>
+          <div class="proposal-arch">
+            <div class="arch-frame">
+              <div class="arch-flowers" aria-hidden="true"></div>
+              <div class="arch-lights" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+          <div class="proposal-petals" id="proposal-petals" aria-hidden="true"></div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">Chapter X</p>
+          <h2 class="chapter-title">Somewhere Between the Little Moments...</h2>
+          <div class="story-card glassmorphism">
+            <p>I don't want to make unrealistic promises.</p>
+            <p>I know life isn't always perfect.</p>
+            <p>But if we ever decide to begin something together, I want to give it my <strong>honesty, loyalty, time</strong> and genuine effort.</p>
+            <p>I'll look forward to your messages. I'll listen when you want to talk.</p>
+            <p>I'll try to make you smile, even on days when your mood isn't the best.</p>
+            <p>I'll respect your dreams, your space and your individuality.</p>
+          </div>
+          <div class="proposal-question">
+            <div class="proposal-reveal" id="proposal-reveal" aria-live="polite">
+              <p class="proposal-prelude">I found someone who became special to me.</p>
+              <p class="proposal-names">KARTIK <span class="x-symbol">×</span> DIYA ❤️</p>
+              <p class="proposal-ask">Can we start a beautiful story together?</p>
+              <button class="btn btn-primary proposal-heart-button" id="read-heart-btn" type="button">Read My Heart ❤️</button>
+            </div>
+          </div>
+        </div>
+        <figure class="chapter-illustration reveal" data-illustration="chapter-10-proposal">
+          <img src="public/images/illustrations/chapter-10-proposal.svg" alt="A romantic pink rose garden at sunset with a heart-shaped floral arch and fairy lights" loading="lazy" width="960" height="540">
+          <figcaption>A garden of golden light, waiting for one beautiful answer.</figcaption>
+        </figure>
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="9" type="button">← Back</button>
+          <button class="nav-btn next-btn" data-next="11" type="button">She gets to decide ❤️</button>
+        </div>
+      </section>
+
+      <!-- FINAL PROPOSAL RESPONSE -->
+      <section class="chapter scene-response" id="ch11" data-chapter="11">
+        <div class="response-bg" aria-hidden="true">
+          <div class="response-particles" id="response-particles"></div>
+        </div>
+        <div class="chapter-content reveal">
+          <p class="chapter-label">The Moment</p>
+          <h2 class="chapter-title response-title">Your Answer</h2>
+          <p class="response-subtitle">No pressure. No expectations. Just honesty. 🌸</p>
+
+          <div class="response-options" id="response-options">
+            <button class="response-btn response-yes" id="resp-yes" type="button">
+              <span class="resp-icon">❤️</span>
+              <span class="resp-label">YES</span>
+              <span class="resp-sub">Let's start something beautiful</span>
+            </button>
+            <button class="response-btn response-time" id="resp-time" type="button">
+              <span class="resp-icon">🌸</span>
+              <span class="resp-label">I Need Some Time</span>
+              <span class="resp-sub">I'll wait, there's no rush</span>
+            </button>
+            <button class="response-btn response-friends" id="resp-friends" type="button">
+              <span class="resp-icon">🤍</span>
+              <span class="resp-label">Let's Stay Friends</span>
+              <span class="resp-sub">I value you either way</span>
+            </button>
+          </div>
+          <p class="answer-status" id="answer-status" role="status" aria-live="polite"></p>
+
+          <!-- Response Messages (hidden until chosen) -->
+          <div class="response-message" id="resp-msg-yes" aria-live="polite">
+            <div class="resp-animation bloom-animation" aria-hidden="true"></div>
+            <h3>Maybe this is the beginning of something beautiful. ❤️</h3>
+            <p>Thank you for saying yes. I promise to make every moment worth it.</p>
+          </div>
+          <div class="response-message" id="resp-msg-time" aria-live="polite">
+            <div class="resp-animation float-animation" aria-hidden="true"></div>
+            <h3>Take all the time you need. 🌸</h3>
+            <p>There's absolutely no pressure. I'll be here whenever you're ready.</p>
+          </div>
+          <div class="response-message" id="resp-msg-friends" aria-live="polite">
+            <div class="resp-animation calm-animation" aria-hidden="true"></div>
+            <h3>Thank you for being honest. 🤍</h3>
+            <p>I respect your feelings completely and I value you as a person.</p>
+          </div>
+        </div>
+
+        <div class="chapter-nav-bottom">
+          <button class="nav-btn prev-btn" data-prev="10" type="button">← Back</button>
+          <button class="nav-btn restart-story" id="restart-story-btn" type="button">↺ Read the story again</button>
+        </div>
+      </section>
+
     </main>
 
-    <footer><span>Made with light</span><span>DIYA · 2026</span><button id="top-button" type="button">Back to top ↑</button></footer>
+    <!-- Memories Gallery (accessed via nav) -->
+    <section class="memories-section" id="memories" aria-label="Our memories">
+      <div class="memories-inner">
+        <p class="chapter-label">Memories</p>
+        <h2 class="chapter-title">Little Moments, <em>Golden Light.</em></h2>
+        <p class="memories-sub">Little moments that keep glowing, long after the day is over.</p>
+        <div class="gallery" id="gallery"></div>
+        <button class="btn btn-ghost close-memories" id="close-memories" type="button">← Back to Story</button>
+      </div>
+    </section>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+      <span>Made with ❤️ for a beautiful possibility</span>
+      <span>A little world · 2026</span>
+      <button id="memories-btn" type="button">View Memories 🌸</button>
+    </footer>
+
+    <!-- Audio Panel -->
     <aside class="audio-panel" id="audio-panel" aria-label="Audio controls" aria-hidden="true">
-      <div class="panel-top"><span class="eyebrow">Sound & atmosphere</span><button id="audio-close" type="button" aria-label="Close audio controls">×</button></div>
+      <div class="panel-top">
+        <span class="panel-eyebrow">Sound & Atmosphere</span>
+        <button id="audio-close" type="button" aria-label="Close audio controls">×</button>
+      </div>
       <p class="panel-title">Set the mood.</p>
-      <label class="toggle-row"><span><strong>Background music</strong><small>Soft ambient glow</small></span><input id="music-toggle" type="checkbox" checked /><i></i></label>
-      <label class="toggle-row"><span><strong>Sound effects</strong><small>Moments of magic</small></span><input id="effects-toggle" type="checkbox" checked /><i></i></label>
-      <label class="volume-row"><span>Volume</span><input id="volume" type="range" min="0" max="1" value=".45" step=".01" /></label>
-      <p class="audio-note">Audio begins after you light the night.</p>
+      <label class="toggle-row">
+        <span><strong>Background music</strong><small>Soft romantic ambience</small></span>
+        <input id="music-toggle" type="checkbox" checked /><i></i>
+      </label>
+      <label class="toggle-row">
+        <span><strong>Sound effects</strong><small>Moments of magic</small></span>
+        <input id="effects-toggle" type="checkbox" checked /><i></i>
+      </label>
+      <label class="volume-row">
+        <span>Volume</span>
+        <input id="volume" type="range" min="0" max="1" value=".45" step=".01" aria-label="Volume" />
+      </label>
+      <button class="audio-playback" id="audio-playback" type="button" aria-pressed="false">Play ambience</button>
+      <p class="audio-note">Sound begins only after you open the story.</p>
     </aside>
-    <div class="light-wash" aria-hidden="true"></div>
-    <div class="lightbox" id="lightbox" aria-hidden="true">
-      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close gallery">×</button>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo viewer">
+      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close">×</button>
       <button class="lightbox-arrow prev" id="prev-photo" type="button" aria-label="Previous photo">←</button>
-      <figure><img id="lightbox-image" alt="" /><figcaption id="lightbox-caption"></figcaption></figure>
+      <figure>
+        <img id="lightbox-image" alt="" />
+        <figcaption id="lightbox-caption"></figcaption>
+      </figure>
       <button class="lightbox-arrow next" id="next-photo" type="button" aria-label="Next photo">→</button>
     </div>
+
+    <!-- Transition overlay -->
+    <div class="transition-overlay" id="transition-overlay" aria-hidden="true"></div>
+
     <script src="script.js"></script>
   </body>
 </html>

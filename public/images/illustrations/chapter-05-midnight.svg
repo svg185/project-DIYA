@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+<defs><linearGradient id="moon"><stop stop-color="#273b6b"/><stop offset="1" stop-color="#13152e"/></linearGradient><radialGradient id="moonlight"><stop stop-color="#fff0bd" stop-opacity=".8"/><stop offset="1" stop-color="#fff0bd" stop-opacity="0"/></radialGradient></defs>
+<rect width="960" height="540" fill="url(#moon)"/><circle cx="700" cy="120" r="75" fill="#f9edc3"/><circle cx="670" cy="105" r="80" fill="#273b6b"/><circle cx="700" cy="120" r="200" fill="url(#moonlight)" opacity=".45"/><g fill="#d2c9f1"><circle cx="100" cy="100" r="3"/><circle cx="180" cy="180" r="2"/><circle cx="440" cy="90" r="3"/><circle cx="830" cy="220" r="2"/></g>
+<path d="M0 400c180-90 270-55 430 0s270 70 530-10v150H0Z" fill="#191a35"/><rect x="135" y="240" width="270" height="165" rx="12" fill="#20233f" stroke="#c3a9c7" stroke-width="5"/><rect x="160" y="265" width="220" height="110" fill="#38466f"/><path d="M470 430c10-120 75-140 120-30v30Z" fill="#17152e"/><g fill="#9cb1d7" opacity=".5"><circle cx="770" cy="370" r="8"/><circle cx="815" cy="330" r="5"/><circle cx="860" cy="390" r="7"/></g>
+</svg>
